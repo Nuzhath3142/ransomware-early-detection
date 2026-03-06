@@ -1,0 +1,141 @@
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://path-to-your-background-image.jpg'); /* Background from login.jpeg */
+    background-size: cover;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-card {
+    background: rgba(30, 30, 30, 0.9);
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #2d2d2d;
+    color: white;
+    box-sizing: border-box;
+}
+
+.auth-options {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.auth-options a, .auth-footer a {
+    color: #4da6ff;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: white;
+    color: black;
+}
+
+.auth-footer {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+/* This ensures the container takes up the full screen and centers content */
+.auth-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+    margin: 0;
+    padding: 0;
+    
+    /* Background Image with Blur Effect */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b'); 
+    background-size: cover;
+    background-position: center;
+    position: fixed; /* Fixes it to the viewport */
+    top: 0;
+    left: 0;
+}
+
+/* The card style based on your reference image */
+.auth-card {
+    background: rgba(25, 25, 25, 0.9); /* Dark semi-transparent background */
+    backdrop-filter: blur(10px);      /* Adds the blur effect behind the card */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure the inputs look clean and modern */
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 4px;
+    box-sizing: border-box; /* Prevents input from overflowing */
+}
+.success-message {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid #4CAF50;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    color: #81c784;
+    font-size: 0.9rem;
+}
+
+.auth-footer Link, .auth-footer a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #4da6ff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.auth-footer a:hover {
+    text-underline-offset: 4px;
+    text-decoration: underline;
+}
