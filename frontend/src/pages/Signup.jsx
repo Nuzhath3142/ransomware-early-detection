@@ -11,17 +11,24 @@ const Signup = () => {
     });
 
     const handleChange = (e) => {
+        // Correctly updates state based on the input name attribute
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSignup = (e) => {
-        e.preventDefault();
+        e.preventDefault(); // This is crucial to stop the page reload
+        
+        // Basic Validation
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match!");
             return;
         }
-        console.log("Registering User:", formData);
-        // This will eventually connect to your FastAPI backend [cite: 46]
+
+        // Logic check
+        console.log("Form Data Captured:", formData);
+        alert("Account Created Successfully (Check Console)");
+        
+        // Next Step: Call your authServices.register(formData) here
     };
 
     return (
@@ -33,26 +40,60 @@ const Signup = () => {
                 <form onSubmit={handleSignup}>
                     <div className="input-group">
                         <label>Username</label>
-                        <input type="text" name="username" placeholder="Choose a username" onChange={handleChange} required />
+                        <input 
+                            type="text" 
+                            name="username" 
+                            value={formData.username} 
+                            placeholder="Choose a username" 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
+
                     <div className="input-group">
                         <label>Email Address</label>
-                        <input type="email" name="email" placeholder="name@company.com" onChange={handleChange} required />
+                        <input 
+                            type="email" 
+                            name="email" 
+                            value={formData.email} 
+                            placeholder="name@company.com" 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
+
                     <div className="input-group">
                         <label>Password</label>
-                        <input type="password" name="password" placeholder="Create a password" onChange={handleChange} required />
+                        <input 
+                            type="password" 
+                            name="password" 
+                            value={formData.password} 
+                            placeholder="Create a password" 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
+
                     <div className="input-group">
                         <label>Confirm Password</label>
-                        <input type="password" name="confirmPassword" placeholder="Repeat password" onChange={handleChange} required />
+                        <input 
+                            type="password" 
+                            name="confirmPassword" 
+                            value={formData.confirmPassword} 
+                            placeholder="Repeat password" 
+                            onChange={handleChange} 
+                            required 
+                        />
                     </div>
-                    <button type="submit" className="login-btn">Create Account</button>
+
+                    <button type="submit" className="login-btn">
+                        Create Account
+                    </button>
                 </form>
 
                 <div className="auth-footer">
                     <span>Already have an account? </span>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login" className="login-link">Login</Link>
                 </div>
             </div>
         </div>
