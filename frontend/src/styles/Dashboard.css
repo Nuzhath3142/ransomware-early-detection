@@ -1,0 +1,449 @@
+.dashboard-container {
+  /* Deep base color with "Glow Spots" in the corners */
+  background-color: #0b0f1a;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(177, 200, 238, 0.15) 0px, transparent 50%), /* Blue Glow Top-Left */
+    radial-gradient(at 100% 0%, rgba(241, 86, 86, 0.1) 0px, transparent 50%),  /* Red Glow Top-Right */
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%), /* Green Glow Bottom-Right */
+    radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.1) 0px, transparent 50%); /* Amber Glow Bottom-Left */
+  
+  color: #d5e4f3;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 0;
+}
+/* This adds a moving 'glaze' over the entire background */
+.dashboard-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    125deg,
+    rgba(94, 48, 48, 0) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  background-size: 200% 200%;
+  animation: backgroundShine 12s infinite linear;
+  pointer-events: none; /* So you can still click cards */
+  z-index: -1;
+}
+
+@keyframes backgroundShine {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 200%; }
+}
+
+/* Typography Scale */
+h1 { font-size: 1rem; margin: 0; font-weight: 600; }
+h3 { font-size: 0.85rem; margin: 0; font-weight: 600; }
+.label-text { font-size: 0.75rem; color: #94a3b8; margin: 0; }
+.value-text { font-size: 1.1rem; margin: 4px 0; font-weight: 700; }
+.muted { font-size: 0.7rem; color: #64748b; font-weight: 400; }
+.tiny-muted { font-size: 0.65rem; color: #64748b; margin-bottom: 8px; }
+
+/* Layout Components */
+.card {
+  background: rgba(22, 27, 39, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.dash-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.version { font-size: 0.7rem; color: #64748b; }
+
+/* Grids */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.middle-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 12px; margin-bottom: 16px; }
+.bottom-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 12px; }
+
+/* Stats Card */
+.stat-content { display: flex; gap: 12px; align-items: center; }
+.stat-icon-wrapper { padding: 8px; border-radius: 6px; }
+.accent-bar { position: absolute; left: 0; top: 15%; bottom: 15%; width: 3px; border-radius: 0 2px 2px 0; }
+
+/* Threat Gauge */
+.threat-card { text-align: center; }
+.threat-gauge { margin-top: 10px; display: flex; flex-direction: column; align-items: center; }
+.threat-val { font-size: 1.5rem; font-weight: 800; color: #fff; }
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-top: 10px; }
+.data-table th { text-align: left; color: #64748b; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+.data-table td { padding: 8px 0; border-bottom: 1px solid #0f172a; }
+.p-name { font-weight: 600; color: #e2e8f0; }
+.p-id { font-size: 0.65rem; color: #64748b; }
+
+/* Badges & Alerts */
+.risk-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; border: 1px solid currentColor; }
+.risk-tag.high { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+.risk-tag.med { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+
+.alert-entry { border-left: 2px solid #ef4444; background: rgba(255, 255, 255, 0.02); padding: 6px 10px; margin-bottom: 8px; font-size: 0.7rem; }
+.alert-time { font-size: 0.6rem; color: #64748b; }
+
+/* Resource Usage */
+.res-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.res-meta { width: 45px; display: flex; align-items: center; gap: 4px; font-size: 0.65rem; color: #94a3b8; }
+.res-track { flex-grow: 1; height: 4px; background: #1e293b; border-radius: 2px; position: relative; }
+.res-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+.res-val { width: 60px; font-size: 0.65rem; text-align: right; color: #e2e8f0; }
+
+.text-green { color: #10b981; }
+.text-red { color: #ef4444; }
+/* Fix for the overlapping words */
+.pie-wrapper {
+  position: relative;
+  width: 100%;
+  height: 150px; /* Fixed height ensures pie chart space is reserved */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pie-center-label {
+  position: absolute;
+  /* Centering logic */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none; /* Crucial: allows clicks to pass through to the chart */
+  z-index: 10;
+}
+
+.big-pct {
+  font-size: 1.3rem; /* Increased as requested */
+  font-weight: 800;
+  color: #fff;
+  display: block;
+  line-height: 1;
+}
+
+.sub-txt {
+  font-size: 0.7rem; /* Increased as requested */
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Legend styling to prevent sliding */
+.risk-legend {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem; /* Increased font size */
+  font-weight: 500;
+}
+
+.l-label {
+  flex-grow: 1;
+  color: #94a3b8;
+  margin-left: 10px;
+}
+
+.l-val {
+  color: #fff;
+  font-weight: 700;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.brand h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: cursive;
+  letter-spacing: 2px;
+  background: linear-gradient(to bottom, #ffffff 30%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(46, 112, 219, 0.3));
+  margin: 0;
+}
+/* 2. Increase Top Row Headings (Files Monitored, Suspicious Activities, etc.) */
+.stat-info .label-text {
+  font-size: 1rem; /* Noticeably larger for readability */
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+/* 3. Increase Box Headings (Anomalous logs, Alerts, Resource Usage) */
+.card h3 {
+  font-size: 1rem; /* Scaled up to be the dominant text in each block */
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 4. Fine-tuning the Stat Card Values to stay proportional */
+.value-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* 5. Ensure the "Live" pill doesn't get too large with the heading */
+.live-pill {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  vertical-align: middle;
+}
+/* Target the "Threat Score" side heading specifically */
+.threat-card .label-text {
+  font-size: 1rem; /* Matches your other side headings */
+  font-weight: 500;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+  display: block; /* Ensures it stays on its own line above the number */
+}
+
+/* Keep the big number as it is, or refine if needed */
+.threat-val {
+  font-size: 1rem; 
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+}
+
+/* Side headings for bottom sections (Logs, Alerts, Resources) */
+.card h3 {
+  font-size: 1rem; 
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 15px;
+}
+/* File Activity Header Alignment */
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 15px;
+}
+
+.chart-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.chart-legend .line {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.line.blue { background-color: #3b82f6; }
+.line.red { background-color: #ef4444; }
+
+/* Time Filters Alignment */
+.time-filters {
+  display: flex;
+  gap: 8px;
+  background: #1e293b;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.time-filters span {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.time-filters span.active {
+  background: #3b82f6;
+  color: #fff;
+}
+/* Legend Colors */
+.line.blue { background-color: #3b82f6; }
+.line.red { background-color: #ef4444; }
+.line.yellow { background-color: #f59e0b; }
+.line.purple { background-color: #a855f7; }
+
+/* Adjusting the legend for 4 items so they don't wrap awkwardly */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.chart-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+/* Ensure the side-heading stays large as requested earlier */
+.side-heading {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  margin-bottom: 5px;
+}
+/* 1. Dynamic Background with a subtle 'Shine' */
+.dashboard-container {
+  background: radial-gradient(circle at 50% 0%, #1a2236 0%, #0b0f1a 100%);
+  color: #f1f5f9;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 24px;
+  font-family: 'Inter', system-ui, sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle animated light sweep across the background */
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  animation: sweep 8s infinite linear;
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 2. Enhanced Card Design & Interaction */
+.card {
+  background: rgba(22, 27, 39, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer; /* Indicates it can be clicked */
+  position: relative;
+}
+
+/* Hover Effect: The 'Click Me' Visual Cue */
+.card:hover {
+  transform: translateY(-4px);
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5), 
+              0 0 10px rgba(59, 130, 246, 0.1);
+}
+
+.card:active {
+  transform: translateY(-1px); /* Slight 'press' feel on click */
+}
+
+/* 3. Refined Resource Usage Colors (Less Harsh) */
+.res-track {
+  flex-grow: 1;
+  height: 6px;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Muted, glowing bars */
+.res-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.8s ease-out;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom muted palette for the resource bars */
+.res-item:nth-child(2) .res-fill { background: #4a90e2; } /* Muted Blue */
+.res-item:nth-child(3) .res-fill { background: #34d399; } /* Muted Teal/Green */
+.res-item:nth-child(4) .res-fill { background: #fbbf24; } /* Muted Amber */
+
+/* 4. Typography & Labels Enhancement */
+.side-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.brand h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #ffffff, #94a3b8);
+  -webkit-background-clip: text; /* For Chrome, Safari, and Edge */
+  background-clip: text;         /* Standard property for compatibility */
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* 5. Alerts & Tags */
+.alert-entry {
+  border-left: 3px solid;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+
+.alert-entry.high { border-color: #ef4444; }
+.alert-entry.med { border-color: #f59e0b; }
+.alert-entry:hover { background: rgba(255, 255, 255, 0.06); }
+/* Match the large number styling */
+.threat-card .value-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+/* Re-use the sub-label styling for the "High Risk" text */
+.sub-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
